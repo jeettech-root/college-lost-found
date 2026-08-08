@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import ClaimForm from '../components/ClaimForm';
 
 const formatDate = (value) => {
   if (!value) return 'Unknown';
@@ -19,6 +20,7 @@ export default function FoundItemDetails() {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showClaimForm, setShowClaimForm] = useState(false);
 
   const ownerId = item?.finderId?._id || item?.finderId;
   const isOwner = Boolean(user?._id && ownerId && ownerId.toString() === user._id.toString());
@@ -145,10 +147,25 @@ export default function FoundItemDetails() {
                   </button>
                 </>
               ) : null}
+              {!isOwner && user && item.status !== 'resolved' ? (
+                <button
+                  type="button"
+                  onClick={() => setShowClaimForm((value) => !value)}
+                  className="rounded-2xl bg-cyan-300 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
+                >
+                  {showClaimForm ? 'Hide Claim Form' : 'Claim Item'}
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
       </div>
+
+      {showClaimForm && (
+        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-glow backdrop-blur">
+          <ClaimForm itemId={item._id} itemType="found" onSuccess={() => setShowClaimForm(false)} />
+        </div>
+      )}
     </section>
   );
 }
