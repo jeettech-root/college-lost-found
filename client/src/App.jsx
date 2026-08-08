@@ -4,6 +4,10 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import LostItems from './pages/LostItems';
+import LostItemCreate from './pages/LostItemCreate';
+import LostItemDetails from './pages/LostItemDetails';
+import LostItemEdit from './pages/LostItemEdit';
 
 function HomeRedirect() {
 	const { user, loading } = useAuth();
@@ -18,7 +22,7 @@ function HomeRedirect() {
 		);
 	}
 
-	return <Navigate to={user ? '/profile' : '/login'} replace />;
+	return <Navigate to={user ? '/lost' : '/login'} replace />;
 }
 
 function TopBar() {
@@ -31,6 +35,12 @@ function TopBar() {
 					College Lost & Found
 				</Link>
 				<nav className="flex items-center gap-4 text-sm text-slate-300">
+					<Link to="/lost" className="transition hover:text-white">
+						Lost Items
+					</Link>
+					<Link to="/lost/new" className="transition hover:text-white">
+						Report Lost
+					</Link>
 					<Link to="/login" className="transition hover:text-white">
 						Login
 					</Link>
@@ -62,6 +72,24 @@ function AppLayout() {
 					<Route path="/" element={<HomeRedirect />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
+					<Route path="/lost" element={<LostItems />} />
+					<Route
+						path="/lost/new"
+						element={
+							<ProtectedRoute>
+								<LostItemCreate />
+							</ProtectedRoute>
+						}
+					/>
+					<Route path="/lost/:id" element={<LostItemDetails />} />
+					<Route
+						path="/lost/:id/edit"
+						element={
+							<ProtectedRoute>
+								<LostItemEdit />
+							</ProtectedRoute>
+						}
+					/>
 					<Route
 						path="/profile"
 						element={
