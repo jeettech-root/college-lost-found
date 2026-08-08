@@ -8,6 +8,10 @@ import LostItems from './pages/LostItems';
 import LostItemCreate from './pages/LostItemCreate';
 import LostItemDetails from './pages/LostItemDetails';
 import LostItemEdit from './pages/LostItemEdit';
+import FoundItems from './pages/FoundItems';
+import FoundItemCreate from './pages/FoundItemCreate';
+import FoundItemDetails from './pages/FoundItemDetails';
+import FoundItemEdit from './pages/FoundItemEdit';
 
 function HomeRedirect() {
 	const { user, loading } = useAuth();
@@ -35,6 +39,12 @@ function TopBar() {
 					College Lost & Found
 				</Link>
 				<nav className="flex items-center gap-4 text-sm text-slate-300">
+					<Link to="/found" className="transition hover:text-white">
+						Found Items
+					</Link>
+					<Link to="/found/new" className="transition hover:text-white">
+						Report Found
+					</Link>
 					<Link to="/lost" className="transition hover:text-white">
 						Lost Items
 					</Link>
@@ -72,6 +82,24 @@ function AppLayout() {
 					<Route path="/" element={<HomeRedirect />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
+					<Route path="/found" element={<FoundItems />} />
+					<Route
+						path="/found/new"
+						element={
+							<ProtectedRoute>
+								<FoundItemCreate />
+							</ProtectedRoute>
+						}
+					/>
+					<Route path="/found/:id" element={<FoundItemDetails />} />
+					<Route
+						path="/found/:id/edit"
+						element={
+							<ProtectedRoute>
+								<FoundItemEdit />
+							</ProtectedRoute>
+						}
+					/>
 					<Route path="/lost" element={<LostItems />} />
 					<Route
 						path="/lost/new"
