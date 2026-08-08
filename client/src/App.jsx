@@ -12,6 +12,7 @@ import FoundItems from './pages/FoundItems';
 import FoundItemCreate from './pages/FoundItemCreate';
 import FoundItemDetails from './pages/FoundItemDetails';
 import FoundItemEdit from './pages/FoundItemEdit';
+import ClaimTest from './pages/ClaimTest';
 
 function HomeRedirect() {
 	const { user, loading } = useAuth();
@@ -123,6 +124,14 @@ function AppLayout() {
 						element={
 							<ProtectedRoute>
 								<Profile />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/claim-test"
+						element={
+							<ProtectedRoute>
+								<ClaimTest />
 							</ProtectedRoute>
 						}
 					/>
