@@ -32,3 +32,4 @@ PUT /api/claims/:id
 DASHBOARD
 
 GET /api/dashboard/stats
+//demo
