@@ -13,6 +13,7 @@ import FoundItemCreate from './pages/FoundItemCreate';
 import FoundItemDetails from './pages/FoundItemDetails';
 import FoundItemEdit from './pages/FoundItemEdit';
 import ClaimTest from './pages/ClaimTest';
+import ReceivedClaims from './pages/ReceivedClaims';
 
 function HomeRedirect() {
 	const { user, loading } = useAuth();
@@ -64,6 +65,11 @@ function TopBar() {
 					>
 						Profile
 					</Link>
+					{user ? (
+						<Link to="/claims/received" className="transition hover:text-white">
+							Claims Review
+						</Link>
+					) : null}
 				</nav>
 			</div>
 		</header>
@@ -132,6 +138,14 @@ function AppLayout() {
 						element={
 							<ProtectedRoute>
 								<ClaimTest />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/claims/received"
+						element={
+							<ProtectedRoute>
+								<ReceivedClaims />
 							</ProtectedRoute>
 						}
 					/>
