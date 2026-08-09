@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { TagIcon, MapPinIcon, CalendarIcon, ImageIcon, DollarSignIcon, CheckCircleIcon } from './Icons';
 
 const defaultForm = {
   title: '',
@@ -45,129 +46,182 @@ export default function LostItemForm({ initialValues, onSubmit, submitting, subm
   };
 
   return (
-    <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-glow backdrop-blur sm:p-8">
-      <div className="mb-6">
-        <h1 className="font-display text-3xl font-semibold tracking-tight text-white">{title}</h1>
-        <p className="mt-2 text-sm leading-6 text-slate-400">{subtitle}</p>
+    <section className="mx-auto max-w-3xl rounded-3xl border border-white/[0.08] bg-[#111726]/90 p-6 shadow-glow backdrop-blur-md sm:p-10">
+      <div className="mb-8 border-b border-white/[0.08] pb-6">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-300">
+          <TagIcon className="h-3.5 w-3.5" />
+          Lost Item Declaration
+        </span>
+        <h1 className="mt-3 font-display text-3xl font-bold tracking-tight text-white">{title}</h1>
+        <p className="mt-2 text-sm leading-relaxed text-slate-400">{subtitle}</p>
       </div>
 
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="block">
-            <span className="mb-2 block text-sm text-slate-300">Title</span>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-amber-300/60"
-              placeholder="Black backpack"
-              required
-            />
-          </label>
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        {/* Section 1: Item Identity */}
+        <div className="space-y-4">
+          <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">1. Basic Details</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block">
+              <span className="mb-2 block text-xs font-medium text-slate-300">Item Title *</span>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+                placeholder="e.g. Black Leather Wallet"
+                required
+              />
+            </label>
+
+            <label className="block">
+              <span className="mb-2 block text-xs font-medium text-slate-300">Category *</span>
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+                placeholder="e.g. Electronics, ID Card, Books"
+                required
+              />
+            </label>
+          </div>
 
           <label className="block">
-            <span className="mb-2 block text-sm text-slate-300">Category</span>
-            <input
-              type="text"
-              name="category"
-              value={formData.category}
+            <span className="mb-2 block text-xs font-medium text-slate-300">Description *</span>
+            <textarea
+              name="description"
+              value={formData.description}
               onChange={handleChange}
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-amber-300/60"
-              placeholder="Electronics, Books, ID Card"
-              required
-            />
-          </label>
-        </div>
-
-        <label className="block">
-          <span className="mb-2 block text-sm text-slate-300">Description</span>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows="5"
-            className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-amber-300/60"
-            placeholder="Describe the item clearly so it can be identified."
-            required
-          />
-        </label>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="block">
-            <span className="mb-2 block text-sm text-slate-300">Location</span>
-            <input
-              type="text"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-amber-300/60"
-              placeholder="Library, hostel block, cafeteria"
-              required
-            />
-          </label>
-
-          <label className="block">
-            <span className="mb-2 block text-sm text-slate-300">Date lost</span>
-            <input
-              type="date"
-              name="dateLost"
-              value={formData.dateLost}
-              onChange={handleChange}
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-amber-300/60"
+              rows="4"
+              className="w-full rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+              placeholder="Describe distinguishing marks, colors, contents, brand, or condition..."
               required
             />
           </label>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="block">
-            <span className="mb-2 block text-sm text-slate-300">Image URL</span>
-            <input
-              type="url"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-amber-300/60"
-              placeholder="https://..."
-            />
-          </label>
+        {/* Section 2: Location & Date */}
+        <div className="space-y-4 pt-2 border-t border-white/[0.06]">
+          <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">2. Location & Timeline</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block">
+              <span className="mb-2 flex items-center gap-1 text-xs font-medium text-slate-300">
+                <MapPinIcon className="h-3.5 w-3.5 text-amber-400" />
+                Location Lost *
+              </span>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+                placeholder="e.g. Central Library, 2nd Floor"
+                required
+              />
+            </label>
 
-          <label className="block">
-            <span className="mb-2 block text-sm text-slate-300">Reward</span>
-            <input
-              type="number"
-              name="reward"
-              min="0"
-              step="1"
-              value={formData.reward}
-              onChange={handleChange}
-              className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-amber-300/60"
-              placeholder="0"
-            />
-          </label>
+            <label className="block">
+              <span className="mb-2 flex items-center gap-1 text-xs font-medium text-slate-300">
+                <CalendarIcon className="h-3.5 w-3.5 text-amber-400" />
+                Date Lost *
+              </span>
+              <input
+                type="date"
+                name="dateLost"
+                value={formData.dateLost}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 text-sm text-white outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+                required
+              />
+            </label>
+          </div>
         </div>
 
-        <label className="block">
-          <span className="mb-2 block text-sm text-slate-300">Status</span>
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-amber-300/60"
-          >
-            <option value="active">Active</option>
-            <option value="claimed">Claimed</option>
-            <option value="resolved">Resolved</option>
-          </select>
-        </label>
+        {/* Section 3: Media & Extras */}
+        <div className="space-y-4 pt-2 border-t border-white/[0.06]">
+          <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">3. Media & Reward</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block">
+              <span className="mb-2 flex items-center gap-1 text-xs font-medium text-slate-300">
+                <ImageIcon className="h-3.5 w-3.5 text-slate-400" />
+                Image URL (optional)
+              </span>
+              <input
+                type="url"
+                name="image"
+                value={formData.image}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+                placeholder="https://images.unsplash.com/..."
+              />
+            </label>
+
+            <label className="block">
+              <span className="mb-2 flex items-center gap-1 text-xs font-medium text-slate-300">
+                <DollarSignIcon className="h-3.5 w-3.5 text-amber-400" />
+                Reward ($) (optional)
+              </span>
+              <input
+                type="number"
+                name="reward"
+                min="0"
+                step="1"
+                value={formData.reward}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+                placeholder="0"
+              />
+            </label>
+          </div>
+
+          {/* Live Image Preview Box */}
+          {formData.image ? (
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0B0F17] p-2">
+              <p className="mb-2 text-[11px] font-semibold text-slate-400 px-2">Image Preview:</p>
+              <img
+                src={formData.image}
+                alt="Preview"
+                className="h-40 w-full rounded-xl object-cover"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
+          ) : null}
+
+          <label className="block">
+            <span className="mb-2 block text-xs font-medium text-slate-300">Status</span>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 text-sm text-white outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+            >
+              <option value="active">Active (Currently Lost)</option>
+              <option value="claimed">Claimed (Under Verification)</option>
+              <option value="resolved">Resolved (Returned)</option>
+            </select>
+          </label>
+        </div>
 
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded-2xl bg-amber-300 px-4 py-3 font-semibold text-slate-950 transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-400 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-amber-subtle transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {submitting ? 'Saving...' : submitLabel}
+          {submitting ? (
+            <>
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-950 border-t-transparent" />
+              <span>Saving Report...</span>
+            </>
+          ) : (
+            <>
+              <CheckCircleIcon className="h-5 w-5" />
+              <span>{submitLabel}</span>
+            </>
+          )}
         </button>
       </form>
     </section>
